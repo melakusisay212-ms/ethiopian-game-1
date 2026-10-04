@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0c1f16">
+<title>Ethiopia</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+</head>
+<body><div class="stripe"></div>
+<h1>Ethiopia</h1>
+<div class="sub" id="lvn">Match the flags. Travel the land.</div>
+<div class="bar">
+ <div class="box" id="mbox">Moves<b id="moves">0</b></div>
+ <div class="box" id="gbox">Goal<b id="goal">0</b></div>
+ <div class="box">Score<b id="score">0</b></div>
+</div>
+<div class="bar"><button class="ib" onclick="showMap()">🗺 Map</button><button class="ib" onclick="showBook()">📖 Book</button><button class="ib" id="mute" onclick="toggleMute()">🔊</button></div>
+<div id="wrap"><div id="grid"></div></div>
+<div id="toast"></div>
+<canvas id="fx"></canvas>
+<div id="over"><div class="card"><h2 id="oh"></h2><div id="stars"></div><p id="fm"></p><div id="ob"></div></div></div>
+<div class="scr" id="map"><h2>Journey</h2><div id="mp"></div></div>
+<div class="scr" id="book"><button class="x" onclick="hideBook()">Close</button><h2>Region book</h2><div id="bk" class="cards"></div></div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
