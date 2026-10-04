@@ -1,4 +1,4 @@
-name: Build game
+name: Build game and debug APK
 
 on:
   push:
@@ -10,13 +10,43 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install
-      - run: npm run build
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install and build web app
+        run: |
+          npm install
+          npm run build
+
+      - name: Create Android project
+        run: |
+          npx cap add android
+          # allow vibration and lock to portrait
+          sed -i 's#<application#<uses-permission android:name="android.permission.VIBRATE" />\n    <application#' android/app/src/main/AndroidManifest.xml
+          sed -i 's#<activity#<activity android:screenOrientation="portrait"#' android/app/src/main/AndroidManifest.xml
+          npx cap sync android
+
+      - name: Build debug APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+
       - uses: actions/upload-artifact@v4
         with:
-          name: ethiopia-game
+          name: ethiopia-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ethiopia-web
           path: dist
           retention-days: 30
